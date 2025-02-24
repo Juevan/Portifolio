@@ -28,7 +28,7 @@ function Home() {
                     </div>
                 </div>
                 <div className="w-full md:w-1/2 flex justify-center">
-                    <img src="https://raw.githubusercontent.com/Juevan/Portifolio/refs/heads/main/src/images/ilustracao.png" alt="Ilustração Programador" className="w-full h-auto" loading="lazy" />
+                    <img src="https://raw.githubusercontent.com/Juevan/Portifolio/refs/heads/main/src/images/ilustracao.svg" alt="Ilustração Programador" className="w-full h-auto" loading="lazy" />
                 </div>
             </div>
         </section>
