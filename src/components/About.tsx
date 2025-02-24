@@ -2,7 +2,7 @@ function About() {
     return (<section id="about" className="bg-gray-100 dark:bg-gray-900 py-10 md:py-20">
         <div className="max-w-4xl mx-auto px-4 text-center">
             <div className="mx-auto mb-6 w-32 h-32 rounded-full overflow-hidden">
-                <img src="src\images\profile.png" alt="Foto de Antonio Juevan" className="w-full h-full object-cover" loading="lazy" />
+                <img src="https://raw.githubusercontent.com/Juevan/Portifolio/refs/heads/main/src/images/profile.png" alt="Foto de Antonio Juevan" className="w-full h-full object-cover" loading="lazy" />
             </div>
             <h3 className="text-2xl font-bold mb-2">Antonio Juevan</h3>
             <p className="text-gray-700 dark:text-gray-300 mb-8">
