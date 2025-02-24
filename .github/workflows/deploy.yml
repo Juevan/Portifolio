@@ -26,12 +26,18 @@ jobs:
         run: npm run build
       
       - name: Verificar conteúdo do build
-        run: ls -la ./build
+        run: |
+          if [ -d "./build" ]; then
+            ls -la ./build;
+          else
+            echo "Pasta build não encontrada. Verifique seu comando de build.";
+            exit 1;
+          fi
       
       - name: Deploy para GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          personal_token: ${{ secrets.PERSONAL_TOKEN }}  # certifique-se que este secret está configurado corretamente com um PAT válido
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
           publish_dir: ./build
-          user_name: 'Antonio Juevan'           # adicione seu nome de usuário aqui
-          user_email: 'antoniojuevan@gmail.com'  # adicione seu email aqui
+          user_name: 'Antonio Juevan'           
+          user_email: 'antoniojuevan@gmail.com'  
