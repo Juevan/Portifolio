@@ -1,43 +1,39 @@
-name: Deploy GitHub Pages
-permissions:
-  contents: write
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout do código
-        uses: actions/checkout@v2
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '14'
-      
-      - name: Instalar dependências
-        run: npm install
-      
-      - name: Build do projeto
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
         run: npm run build
-      
-      - name: Verificar conteúdo do build
-        run: |
-          if [ -d "./build" ]; then
-            ls -la ./build;
-          else
-            echo "Pasta build não encontrada. Verifique seu comando de build.";
-            exit 1;
-          fi
-      
-      - name: Deploy para GitHub Pages
+
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.PERSONAL_TOKEN }}
           publish_dir: ./build
           user_name: 'Antonio Juevan'           
-          user_email: 'antoniojuevan@gmail.com'  
+          user_email: 'antoniojuevan@gmail.com'
