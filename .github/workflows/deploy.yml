@@ -25,8 +25,13 @@ jobs:
       - name: Build do projeto
         run: npm run build
       
+      - name: Verificar conteúdo do build
+        run: ls -la ./build
+      
       - name: Deploy para GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}  # certifique-se que este secret está configurado corretamente com um PAT válido
           publish_dir: ./build
+          user_name: 'Antonio Juevan'           # adicione seu nome de usuário aqui
+          user_email: 'antoniojuevan@gmail.com'  # adicione seu email aqui
