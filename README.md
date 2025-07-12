@@ -35,7 +35,6 @@ Caso seu projeto utilize uma pasta de build (ex.: `build` ou `dist`):
 2. Adicione o script de deploy ao seu `package.json`:
    ```json
    "scripts": {
-     // ...existing code...
      "deploy": "gh-pages -d build"
    }
    ```
@@ -56,7 +55,6 @@ Caso seu projeto utilize uma pasta de build (ex.: `build` ou `dist`):
 - Configure a propriedade "homepage" no `package.json`:
   ```json
   {
-    // ...existing code...
     "homepage": "https://Juevan.github.io/Portifólio"
   }
   ```
