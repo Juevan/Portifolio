@@ -1,5 +1,6 @@
 import SocialIcons from './SocialIcons';
 import SectionContainer from './SectionContainer';
+import ilustracaoSvg from '../images/ilustracao.svg';
 
 function Home() {
     return (
@@ -43,7 +44,7 @@ function Home() {
                     <div className="relative">
                         <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full blur-3xl opacity-20 scale-150"></div>
                         <img
-                            src="src\images\ilustracao.svg"
+                            src={ilustracaoSvg}
                             alt="Ilustração Programador"
                             className="relative w-full h-auto max-w-lg transform hover:scale-105 transition-transform duration-300 recolor-red"
                             loading="lazy"

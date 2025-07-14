@@ -1,6 +1,7 @@
 import React from 'react';
 import SectionContainer from './SectionContainer';
 import { useExperiences } from '../hooks/usePortfolio';
+import cvPdf from '../assets/cv-antonio-juevan.pdf';
 
 const ExperienceItem: React.FC<{
   experience: import('../types').Experience;
@@ -100,7 +101,7 @@ const Resume: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="/assets/cv-antonio-juevan.pdf"
+              href={cvPdf}
               download="CV-Antonio-Juevan.pdf"
               className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white rounded-lg font-medium transition-all duration-300 hover:transform hover:scale-105"
             >
