@@ -121,7 +121,7 @@ export class PortfolioRepository {
         technologies: ['Zeev', 'JavaScript', 'Plugin Development', 'SLA Management', 'Task Control'],
         category: ProjectCategory.PRODUTOS_ZEEV,
         icon: '⚡',
-        repositoryUrl: 'https://github.com/Juevan/zeev-sla-blocker'
+        repositoryUrl: 'https://github.com/Juevan/ZeevSLABlocker'
       }
     ];
   }
