@@ -1,6 +1,50 @@
 import React from 'react';
 import { useScrollBehavior, useTheme } from '../hooks/usePortfolio';
-import { DesignTokens } from '../design-system/tokens';
+
+// navItems e navIcons extraídos para fora para evitar repetição
+const navItems = [
+  { id: 'home', label: 'Início' },
+  { id: 'about', label: 'Sobre' },
+  { id: 'resume', label: 'Currículo' },
+  { id: 'portfolio', label: 'Portfólio' },
+  { id: 'services', label: 'Serviços' },
+  { id: 'contact', label: 'Contato' }
+];
+
+const navIcons: Record<string, React.ReactNode> = {
+  home: (
+    <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h3m10-11v10a1 1 0 01-1 1h-3m-4 0h4" />
+    </svg>
+  ),
+  about: (
+    <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 15c2.485 0 4.797.755 6.879 2.047M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+  ),
+  resume: (
+    <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8 16h8M8 12h8m-6 8h4a2 2 0 002-2V6a2 2 0 00-2-2H8a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+  ),
+  portfolio: (
+    <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+      <rect width="20" height="14" x="2" y="5" rx="2" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M16 3v4M8 3v4" />
+    </svg>
+  ),
+  services: (
+    <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L8 21m8-4l1.75 4M12 3v9m0 0l-3.5 3.5M12 12l3.5 3.5" />
+    </svg>
+  ),
+  contact: (
+    <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21 10.5a8.38 8.38 0 01-.9 3.8c-.6 1.2-1.5 2.3-2.6 3.1a8.38 8.38 0 01-3.8.9c-1.2 0-2.4-.2-3.5-.7a8.38 8.38 0 01-3.1-2.6A8.38 8.38 0 013 13.5c0-1.2.2-2.4.7-3.5a8.38 8.38 0 012.6-3.1A8.38 8.38 0 0110.5 3c1.2 0 2.4.2 3.5.7a8.38 8.38 0 013.1 2.6A8.38 8.38 0 0121 10.5z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  ),
+};
 
 const NavigationLinks: React.FC<{
   activeSection: string;
@@ -8,15 +52,6 @@ const NavigationLinks: React.FC<{
   isMobile?: boolean;
   onLinkClick?: () => void;
 }> = ({ activeSection, onSectionClick, isMobile = false, onLinkClick }) => {
-  const navItems = [
-    { id: 'home', label: 'Início' },
-    { id: 'about', label: 'Sobre' },
-    { id: 'resume', label: 'Currículo' },
-    { id: 'portfolio', label: 'Portfólio' },
-    { id: 'services', label: 'Serviços' },
-    { id: 'contact', label: 'Contato' }
-  ];
-
   const handleClick = (sectionId: string) => {
     onSectionClick(sectionId);
     onLinkClick?.();
@@ -93,7 +128,7 @@ const MobileMenu: React.FC<{
   onThemeToggle: () => void;
 }> = ({ isOpen, onToggle, activeSection, onSectionClick, isDark, onThemeToggle }) => (
   <>
-    {/* Mobile Menu Button */}
+    {/* Botão do menu mobile */}
     <button
       onClick={onToggle}
       className="md:hidden p-2 rounded-lg bg-white/20 dark:bg-gray-800/70 backdrop-blur-sm border border-emerald-200/30 dark:border-gray-600/50 hover:border-emerald-400/50 dark:hover:border-emerald-400/50 transition-all duration-300"
@@ -118,27 +153,48 @@ const MobileMenu: React.FC<{
       </div>
     </button>
 
-    {/* Mobile Menu Overlay */}
+    {/* Overlay do menu mobile */}
     {isOpen && (
       <div className="fixed inset-0 z-40 md:hidden">
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-md" onClick={onToggle} />
-        <div className="fixed top-0 right-0 h-full w-64 bg-white dark:bg-gray-800 border-l-2 border-emerald-500/60 dark:border-emerald-400/60 p-6 shadow-2xl">
-          <div className="flex flex-col h-full bg-white dark:bg-gray-800">
-            <div className="flex justify-between items-center mb-8 pb-4 border-b border-gray-200 dark:border-gray-700">
-              <h2 className="text-xl font-bold bg-gradient-to-r from-emerald-600 to-cyan-600 bg-clip-text text-transparent">
-                Menu
-              </h2>
-              <ThemeToggle isDark={isDark} onToggle={onThemeToggle} />
-            </div>
-            
-            <NavigationLinks
-              activeSection={activeSection}
-              onSectionClick={onSectionClick}
-              isMobile={true}
-              onLinkClick={onToggle}
-            />
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onClick={onToggle} />
+        <aside className="fixed top-0 right-0 h-full w-full bg-white/95 dark:bg-gray-900/95 border-l-2 border-emerald-500/40 dark:border-emerald-400/40 shadow-2xl flex flex-col transition-all duration-300">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200/60 dark:border-gray-700/60 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm">
+            <h2 className="text-lg font-bold bg-gradient-to-r from-emerald-600 to-cyan-600 bg-clip-text text-transparent">
+              Menu
+            </h2>
+            <ThemeToggle isDark={isDark} onToggle={onThemeToggle} />
           </div>
-        </div>
+          <nav className="flex-1 flex flex-col py-4 px-2 space-y-1 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => {
+                  onSectionClick(item.id);
+                  onToggle();
+                }}
+                className={`flex items-center px-2 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                  activeSection === item.id
+                    ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-white shadow'
+                    : 'text-gray-900 dark:text-gray-100 hover:bg-emerald-50/60 dark:hover:bg-gray-800/40'
+                }`}
+                style={{
+                  boxShadow: activeSection === item.id ? '0 2px 8px 0 rgba(16,185,129,0.08)' : undefined,
+                }}
+              >
+                <span className="w-5 h-5 mr-2">{navIcons[item.id]}</span>
+                {item.label}
+              </button>
+            ))}
+          </nav>
+          <div className="px-4 pb-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm">
+            <button
+              onClick={onToggle}
+              className="w-full py-1.5 rounded-md bg-gray-100/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-200 hover:bg-gray-200/90 dark:hover:bg-gray-700/90 transition text-sm"
+            >
+              Fechar Menu
+            </button>
+          </div>
+        </aside>
       </div>
     )}
   </>
@@ -170,26 +226,15 @@ const Header: React.FC = () => {
   const { isDark, toggleTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
-  const handleSectionClick = (sectionId: string) => {
-    scrollToSection(sectionId);
-  };
+  const handleSectionClick = (sectionId: string) => scrollToSection(sectionId);
+  const handleHomeClick = () => scrollToSection('home');
+  const toggleMobileMenu = () => setIsMobileMenuOpen(prev => !prev);
 
-  const handleHomeClick = () => {
-    scrollToSection('home');
-  };
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(prev => !prev);
-  };
-
-  // Close mobile menu on resize to desktop
+  // Fecha menu mobile ao redimensionar para desktop
   React.useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setIsMobileMenuOpen(false);
-      }
+      if (window.innerWidth >= 768) setIsMobileMenuOpen(false);
     };
-
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -198,9 +243,7 @@ const Header: React.FC = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg border-b border-emerald-200/20 dark:border-gray-700/30">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
           <Logo onHomeClick={handleHomeClick} />
-
           {/* Desktop Navigation */}
           <NavigationLinks
             activeSection={activeSection}

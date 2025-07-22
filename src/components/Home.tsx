@@ -8,7 +8,7 @@ function Home() {
             <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
                 <div className="w-full lg:w-1/2 text-center lg:text-left px-4 lg:px-0">
                     <div className="mb-6">
-                        <span className="inline-block px-3 lg:px-4 py-2 bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 rounded-full text-xs lg:text-sm font-medium mb-4">
+                        <span className="inline-block px-3 lg:px-4 py-2 bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 rounded-full text-xs lg:text-sm font-medium mb-4 mt-8 lg:mt-0">
                             👋 Bem-vindo ao meu portfólio
                         </span>
                         <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold mb-4 lg:mb-6 leading-tight text-gray-900 dark:text-white">
