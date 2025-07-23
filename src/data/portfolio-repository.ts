@@ -84,7 +84,7 @@ export class PortfolioRepository {
     return [
       {
         id: '1',
-        title: 'Desenvolvedor Junior',
+        title: 'Desenvolvedor Full Stack',
         company: 'Raiz educação',
         companyUrl: 'https://www.linkedin.com/company/raizeducacao',
         period: '07/2024 - Atualmente',
@@ -93,7 +93,7 @@ export class PortfolioRepository {
       },
       {
         id: '2',
-        title: 'Analista FLUIG Junior',
+        title: 'Consultor e Desenvolvedor FLUIG',
         company: 'Boa Digital',
         companyUrl: 'https://www.linkedin.com/company/boadigital',
         period: '03/2023 - Atualmente',
@@ -102,7 +102,7 @@ export class PortfolioRepository {
       },
       {
         id: '3',
-        title: 'Analista Back-End Junior',
+        title: 'Desenvolvedor Back-End',
         company: 'CIEDS',
         companyUrl: 'https://www.linkedin.com/company/ciedsbrasil',
         period: '07/2023 - 01/2024',

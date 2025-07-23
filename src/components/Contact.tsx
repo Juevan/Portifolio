@@ -7,11 +7,7 @@ function Contact() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [mensagem, setMensagem] = useState("");
-  const [errors, setErrors] = useState<{
-    nome?: string;
-    email?: string;
-    mensagem?: string;
-  }>({});
+  const [errors, setErrors] = useState({ nome: "", email: "", mensagem: "" });
 
   const handleModalClose = () => {
     setIsModalClosing(true);
@@ -22,46 +18,55 @@ function Contact() {
       setNome("");
       setEmail("");
       setMensagem("");
+      setErrors({ nome: "", email: "", mensagem: "" });
     }, 300);
   };
 
   const handleSubmit = async () => {
-    // Validação
+    const newErrors = { nome: "", email: "", mensagem: "" };
     let valid = true;
-    const newErrors: typeof errors = {};
     if (!nome.trim()) {
       newErrors.nome = "Campo obrigatório";
       valid = false;
+    } else if (nome.length > 100) {
+      newErrors.nome = "Máximo de 100 caracteres";
+      valid = false;
     }
+    const emailRegex = /^[\w-.]+@[\w-]+\.[a-zA-Z]{2,}$/;
     if (!email.trim()) {
       newErrors.email = "Campo obrigatório";
+      valid = false;
+    } else if (!emailRegex.test(email)) {
+      newErrors.email = "Email inválido";
       valid = false;
     }
     if (!mensagem.trim()) {
       newErrors.mensagem = "Campo obrigatório";
       valid = false;
+    } else if (mensagem.length > 500) {
+      newErrors.mensagem = "Máximo de 500 caracteres";
+      valid = false;
     }
     setErrors(newErrors);
     if (!valid) return;
 
-    // URL do seu form (sem ?embedded)
-    const formUrl =
-      "https://docs.google.com/forms/d/e/1FAIpQLSeZCG79t1pYC6cN3SiRPTLvzrh8gPOTCx0Jf_dXl0zhsg59GQ/formResponse";
-
-    const data = new URLSearchParams();
-    data.append("entry.92112248", nome);
-    data.append("entry.7037097", email);
-    data.append("entry.2078139954", mensagem);
+    const apiUrl = "https://validador-web.vercel.app/enviar-contato";
 
     try {
-      await fetch(formUrl, {
+      const response = await fetch(apiUrl, {
         method: "POST",
-        mode: "no-cors",   // sem-cors para não bloquear a requisição no client-side
-        body: data         // passa o URLSearchParams diretamente
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nome, email, mensagem }),
       });
-      setIsErrorModal(false);
+
+      if (response.ok) {
+        setIsErrorModal(false);
+      } else {
+        console.warn("Status inesperado:", response.status);
+        setIsErrorModal(true);
+      }
     } catch (err) {
-      console.error("Erro enviando ao Google Form:", err);
+      console.error("Erro enviando para a API:", err);
       setIsErrorModal(true);
     } finally {
       setIsModalOpen(true);
@@ -83,10 +88,18 @@ function Contact() {
             antoniojuevan@gmail.com
           </a>{" "}
           ou ligue para{" "}
-          <strong className="text-cyan-600 dark:text-cyan-400">(21) 96533-7473</strong>.
+          <a
+            href="https://wa.me/5521965337473"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-cyan-600 dark:text-cyan-400 hover:underline focus:underline"
+            title="Conversar no WhatsApp"
+          >
+            (21) 96533-7473
+          </a>.
         </p>
 
-        {/* <form
+        <form
           className="max-w-lg mx-auto bg-white dark:bg-gray-700 rounded-lg shadow-md p-8 flex flex-col gap-6"
           onSubmit={(e) => {
             e.preventDefault();
@@ -94,6 +107,7 @@ function Contact() {
           }}
           noValidate
         >
+
           <div className="flex flex-col items-start gap-1 w-full">
             <label htmlFor="nome" className="font-semibold text-gray-700 dark:text-gray-200">
               Nome
@@ -101,15 +115,15 @@ function Contact() {
             <input
               id="nome"
               type="text"
-              className={`w-full px-4 py-2 rounded border transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 ${
-                errors.nome ? "border-red-500" : "border-gray-300 dark:border-gray-600"
-              }`}
+              className={`w-full px-4 py-2 rounded border transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 ${errors.nome ? "border-red-500" : "border-gray-300 dark:border-gray-600"
+                }`}
               value={nome}
               onChange={(e) => setNome(e.target.value)}
               autoComplete="off"
             />
             {errors.nome && <span className="text-red-500 text-sm">{errors.nome}</span>}
           </div>
+
 
           <div className="flex flex-col items-start gap-1 w-full">
             <label htmlFor="email" className="font-semibold text-gray-700 dark:text-gray-200">
@@ -118,9 +132,8 @@ function Contact() {
             <input
               id="email"
               type="email"
-              className={`w-full px-4 py-2 rounded border transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 ${
-                errors.email ? "border-red-500" : "border-gray-300 dark:border-gray-600"
-              }`}
+              className={`w-full px-4 py-2 rounded border transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 ${errors.email ? "border-red-500" : "border-gray-300 dark:border-gray-600"
+                }`}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoComplete="off"
@@ -128,15 +141,15 @@ function Contact() {
             {errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
           </div>
 
+
           <div className="flex flex-col items-start gap-1 w-full">
             <label htmlFor="mensagem" className="font-semibold text-gray-700 dark:text-gray-200">
               Mensagem
             </label>
             <textarea
               id="mensagem"
-              className={`w-full px-4 py-2 rounded border transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 resize-none min-h-[120px] ${
-                errors.mensagem ? "border-red-500" : "border-gray-300 dark:border-gray-600"
-              }`}
+              className={`w-full px-4 py-2 rounded border transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 resize-none min-h-[120px] ${errors.mensagem ? "border-red-500" : "border-gray-300 dark:border-gray-600"
+                }`}
               value={mensagem}
               onChange={(e) => setMensagem(e.target.value)}
             />
@@ -149,14 +162,13 @@ function Contact() {
           >
             Enviar Mensagem
           </button>
-        </form> */}
+        </form>
 
-        {/* modal de confirmação/erro */}
+
         {isModalOpen && (
           <div
-            className={`fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-all duration-300 ${
-              isModalClosing ? "opacity-0 scale-90 -translate-y-5" : "opacity-100 scale-100 translate-y-0"
-            }`}
+            className={`fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-all duration-300 ${isModalClosing ? "opacity-0 scale-90 -translate-y-5" : "opacity-100 scale-100 translate-y-0"
+              }`}
           >
             <div className="bg-white dark:bg-gray-700 rounded shadow-lg p-6 max-w-sm w-full text-center">
               <h4 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">
