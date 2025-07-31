@@ -116,12 +116,21 @@ export class PortfolioRepository {
     return [
       {
         id: '1',
-        title: 'Sistema de Bloqueio Zeev - Plugin SLA',
-        description: 'Plugin inteligente para plataforma Zeev que impede usuários de abrir novas solicitações quando possuem atividades de correção em atraso superior a 7 dias com SLA estourado. Demonstração funcional disponível no GitHub.',
+        title: 'Plugin ZeevSLABlocker',
+        description: 'Plugin inteligente para plataforma Zeev que impede usuários de abrir novas solicitações quando possuem atividades de correção em atraso superior a 3 dias com SLA estourado. Demonstração funcional disponível no GitHub.',
         technologies: ['Zeev', 'JavaScript', 'Plugin Development', 'SLA Management', 'Task Control'],
         category: ProjectCategory.PRODUTOS_ZEEV,
         icon: '⚡',
         repositoryUrl: 'https://github.com/Juevan/ZeevSLABlocker'
+      },
+      {
+        id: '2',
+        title: 'Plugin ZeevTaskMover',
+        description: 'Plugin inteligente movimentador em lote de tarefas Zeev. Exibe todas as tarefas do usuário agrupadas por aplicativo e tipo de tarefa, permitindo aprovar, rejeitar ou encaminhar tarefas em lote. Necessita licença para uso. Para adquirir, entre em contato pelo e-mail antoniojuevan@gmail.com ou WhatsApp (21) 9 6533-7473.',
+        technologies: ['Zeev', 'Preact', 'TypeScript', 'Tailwind CSS', 'Virtual DOM', 'Javascript Obfuscator'],
+        category: ProjectCategory.PRODUTOS_ZEEV,
+        icon: '🚀',
+        repositoryUrl: 'https://zeev-task-mover.vercel.app/'
       }
     ];
   }
